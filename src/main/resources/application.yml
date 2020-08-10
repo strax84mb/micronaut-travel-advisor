@@ -1,0 +1,36 @@
+micronaut:
+  application:
+    name: travel
+  http:
+    client:
+      read-timeout: 10m
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
+  server:
+    max-request-size: 5mb
+    multipart:
+      max-file-size: 5mb
+    port: 8081
+datasources:
+  default:
+    url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+    schema-generate: CREATE_DROP
+    dialect: H2
+jpa:
+  default:
+    packages-to-scan:
+      - "com.mn.travel"
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: create-drop
+        show_sql: true
